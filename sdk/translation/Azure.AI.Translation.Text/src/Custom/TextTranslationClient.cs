@@ -3,6 +3,7 @@
 
 using Azure.Core.Pipeline;
 using Azure.Core;
+using Azure.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -106,6 +107,25 @@ namespace Azure.AI.Translation.Text
         /// <param name="endpoint">Service Endpoint</param>
         /// <param name="options">Translate Client Options</param>
         public TextTranslationClient(TokenCredential credential, Uri endpoint, TextTranslationClientOptions options = default) : this(endpoint, options)
+        {
+            var policy = new BearerTokenAuthenticationPolicy(credential, TOKEN_SCOPE);
+            options = options ?? new TextTranslationClientOptions();
+
+            this._pipeline = HttpPipelineBuilder.Build(options, new[] { policy }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+
+            if (endpoint.IsPlatformHost())
+            {
+                this._endpoint = new Uri(endpoint, PLATFORM_PATH);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextTranslationClient"/> class.
+        /// </summary>
+        /// <param name="credential">DefaultAzureCredential</param>
+        /// <param name="endpoint">Service Endpoint</param>
+        /// <param name="options">Translate Client Options</param>
+        public TextTranslationClient(DefaultAzureCredential credential, Uri endpoint, TextTranslationClientOptions options = default) : this(endpoint, options)
         {
             var policy = new BearerTokenAuthenticationPolicy(credential, TOKEN_SCOPE);
             options = options ?? new TextTranslationClientOptions();

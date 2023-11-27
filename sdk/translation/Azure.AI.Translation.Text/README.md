@@ -65,6 +65,28 @@ string region = "<Text Translator Azure Region>";
 TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
 ```
 
+#### Create `TextTranslationClient` with Entra Credential
+
+Client API key authentication is used in most of the examples, but you can also authenticate with Entra (Azure Active Directory) using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication.
+
+Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.
+
+To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
+
+```dotnetcli
+dotnet add package Azure.Identity
+```
+
+You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to your Translator resource by assigning the `"Cognitive Services User"` role to your service principal.
+
+Set the values of the `client ID`, `tenant ID`, and `client secret` of the AAD application as environment variables: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`.
+
+```C# Snippet:CreateTextTranslationClientWithAad
+string apiKey = "<Text Translator Custom Endpoint>";
+DefaultAzureCredential credential = new DefaultAzureCredential();
+TextTranslationClient client = new TextTranslationClient(credential, new Uri(endpoint));
+```
+
 ## Key concepts
 
 ### `TextTranslationClient`
@@ -449,7 +471,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dictionaryexamples_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
 
 [translator_resource_create]: https://learn.microsoft.com/azure/cognitive-services/Translator/create-translator-resource
-
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure

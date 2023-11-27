@@ -10,6 +10,7 @@ using Azure.AI.Translation.Text.Tests;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Translation.Text.Samples
@@ -121,6 +122,24 @@ namespace Azure.AI.Translation.Text.Samples
 #endif
             TokenCredential credential = new CustomTokenCredential(new AzureKeyCredential(apiKey));
             TextTranslationClient client = new(credential);
+
+            #endregion
+
+            return client;
+        }
+
+        [Test]
+        public TextTranslationClient CreateTextTranslationClientWithAad()
+        {
+            #region Snippet:CreateTextTranslationClientWithAad
+
+#if SNIPPET
+            string apiKey = "<Text Translator Custom Endpoint>";
+#else
+            string endpoint = TestEnvironment.CustomEndpoint;
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+            TextTranslationClient client = new TextTranslationClient(credential, new Uri(endpoint));
 
             #endregion
 
