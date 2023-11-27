@@ -134,7 +134,7 @@ namespace Azure.AI.Translation.Text.Samples
             #region Snippet:CreateTextTranslationClientWithAad
 
 #if SNIPPET
-            string apiKey = "<Text Translator Custom Endpoint>";
+            string endpoint = "<Text Translator Custom Endpoint>";
 #else
             string endpoint = TestEnvironment.CustomEndpoint;
 #endif

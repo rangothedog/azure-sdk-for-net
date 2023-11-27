@@ -82,7 +82,7 @@ You will also need to [register a new AAD application][register_aad_app] and [gr
 Set the values of the `client ID`, `tenant ID`, and `client secret` of the AAD application as environment variables: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`.
 
 ```C# Snippet:CreateTextTranslationClientWithAad
-string apiKey = "<Text Translator Custom Endpoint>";
+string endpoint = "<Text Translator Custom Endpoint>";
 DefaultAzureCredential credential = new DefaultAzureCredential();
 TextTranslationClient client = new TextTranslationClient(credential, new Uri(endpoint));
 ```
