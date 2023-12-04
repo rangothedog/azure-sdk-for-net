@@ -10,7 +10,6 @@ using Azure.AI.Translation.Text.Tests;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Translation.Text.Samples
