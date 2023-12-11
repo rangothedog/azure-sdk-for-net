@@ -179,6 +179,7 @@ namespace Azure.AI.Translation.Text
         public TextTranslationClient(Azure.AzureKeyCredential credential, System.Uri endpoint, string region = "global", Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         public TextTranslationClient(Azure.Core.TokenCredential credential, Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         public TextTranslationClient(Azure.Core.TokenCredential credential, System.Uri endpoint, Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
+        public TextTranslationClient(Azure.Identity.DefaultAzureCredential credential, System.Uri endpoint, Azure.AI.Translation.Text.TextTranslationClientOptions options = null) { }
         protected TextTranslationClient(System.Uri endpoint) { }
         protected TextTranslationClient(System.Uri endpoint, Azure.AI.Translation.Text.TextTranslationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
